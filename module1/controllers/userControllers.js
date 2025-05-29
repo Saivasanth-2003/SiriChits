@@ -80,29 +80,29 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// const otpsend = async (req, res) => {
-//     const { Phone } = req.body;  
-//     const user = await userModel.findOne({ Phone});
+const otpsend = async (req, res) => {
+    const { Phone } = req.body;  
+    const user = await userModel.findOne({ Phone});
 
-//     if (!user) return res.status(404).json({ error: 'User not found' });
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-//     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-//     otpStore.set(Phone, otp);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore.set(Phone, otp);
 
    
-//     client.messages.create({
-//         body: `Your OTP for password reset is: ${otp}`,
-//         from: 'YOUR_TWILIO_PHONE_NUMBER', 
-//         to: Phone                   
-//     })
-//     .then(message => {
-//         console.log('OTP Sent:', message.sid);
-//         res.json({ message: 'OTP sent to your phone' });
-//     })
-//     .catch(error => {
-//         console.error('Error sending OTP:', error);
-//         res.status(500).json({ error: 'Failed to send OTP' });
-//     });
-// };
+    client.messages.create({
+        body: `Your OTP for password reset is: ${otp}`,
+        from: 'YOUR_TWILIO_PHONE_NUMBER', 
+        to: Phone                   
+    })
+    .then(message => {
+        console.log('OTP Sent:', message.sid);
+        res.json({ message: 'OTP sent to your phone' });
+    })
+    .catch(error => {
+        console.error('Error sending OTP:', error);
+        res.status(500).json({ error: 'Failed to send OTP' });
+    });
+};
 
 module.exports = {register, login, getUserProfile, otpsend};
